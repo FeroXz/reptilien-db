@@ -1,0 +1,132 @@
+
+.reptile-card {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #e1e5e9;
+}
+
+.reptile-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+
+.reptile-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #e1e5e9;
+}
+
+.reptile-card-title {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3748;
+}
+
+.reptile-card-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.action-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: background-color 0.2s ease;
+}
+
+.action-btn:hover {
+  background-color: #f7fafc;
+}
+
+.edit-btn:hover {
+  background-color: #e6f3ff;
+}
+
+.delete-btn:hover {
+  background-color: #fed7d7;
+}
+
+.reptile-card-content {
+  margin-bottom: 16px;
+}
+
+.reptile-card-info {
+  display: grid;
+  gap: 8px;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.info-label {
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 0.9rem;
+}
+
+.info-value {
+  color: #2d3748;
+  font-weight: 500;
+}
+
+.gender-männlich {
+  color: #3182ce;
+}
+
+.gender-weiblich {
+  color: #e53e3e;
+}
+
+.gender-unbekannt {
+  color: #718096;
+}
+
+.price {
+  color: #38a169;
+  font-weight: 600;
+}
+
+.reptile-card-footer {
+  padding-top: 12px;
+  border-top: 1px solid #e1e5e9;
+}
+
+.created-date {
+  font-size: 0.8rem;
+  color: #718096;
+}
+
+@media (max-width: 768px) {
+  .reptile-card {
+    padding: 16px;
+  }
+
+  .reptile-card-title {
+    font-size: 1.1rem;
+  }
+
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 4px;
+  }
+
+  .info-label {
+    font-size: 0.8rem;
+  }
+}

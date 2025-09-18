@@ -1,0 +1,654 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦎 Reptilien-Datenbank</title>
+    <style>
+        * { box-sizing: border-box; }
+        
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            margin: 0 0 0.5rem 0;
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+
+        .header p {
+            margin: 0;
+            opacity: 0.9;
+        }
+
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .search-input {
+            flex: 1;
+            min-width: 200px;
+            padding: 0.75rem 1rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.3);
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #667eea;
+            display: block;
+        }
+
+        .stat-label {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .reptiles-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .reptile-card {
+            background: white;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            transition: transform 0.2s;
+            cursor: pointer;
+        }
+
+        .reptile-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .reptile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .reptile-name {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: #2d3748;
+            margin: 0 0 0.25rem 0;
+        }
+
+        .reptile-species {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .reptile-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .action-btn {
+            background: none;
+            border: none;
+            padding: 0.5rem;
+            border-radius: 0.25rem;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+
+        .action-btn:hover {
+            background: #f3f4f6;
+        }
+
+        .reptile-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .info-item {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: #6b7280;
+            text-transform: uppercase;
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .genetics-tag {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 0.75rem;
+        }
+
+        .price-tag {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 1rem;
+            font-weight: 700;
+            display: inline-block;
+            margin-top: 0.75rem;
+            margin-left: 0.5rem;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 1rem;
+            width: 100%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-title {
+            margin: 0;
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #6b7280;
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #374151;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem;
+            border: 2px solid #e5e7eb;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 0.75rem;
+            justify-content: flex-end;
+            padding-top: 1rem;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #374151;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 1rem;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .empty-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .hidden { display: none; }
+
+        @media (max-width: 768px) {
+            .reptiles-grid {
+                grid-template-columns: 1fr;
+            }
+            .reptile-info {
+                grid-template-columns: 1fr;
+            }
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🦎 Reptilien-Datenbank</h1>
+        <p>Verwaltung Ihrer Reptiliensammlung</p>
+    </div>
+
+    <div class="main">
+        <div class="controls">
+            <input type="text" id="search" class="search-input" placeholder="Suchen nach 
+Art, Name, Genetik...">
+            <button id="addBtn" class="btn btn-primary">➕ Neues Reptil hinzufügen</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <span class="stat-number" id="totalCount">0</span>
+                <span class="stat-label">Reptilien gesamt</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="maleCount">0</span>
+                <span class="stat-label">Männlich ♂</span>
+            </div>
+            <div class="stat-card">
+                <span class="stat-number" id="femaleCount">0</span>
+                <span class="stat-label">Weiblich ♀</span>
+            </div>
+        </div>
+
+        <div id="reptilesContainer" class="reptiles-grid"></div>
+        
+        <div id="emptyState" class="empty-state hidden">
+            <div class="empty-icon">🦎</div>
+            <h2>Willkommen in Ihrer Reptilien-Datenbank!</h2>
+            <p>Sie haben noch keine Reptilien hinzugefügt.</p>
+            <button class="btn btn-primary" onclick="showAddForm()">Erstes Reptil 
+hinzufügen</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Neues Reptil hinzufügen</h3>
+                <button class="close-btn" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="reptileForm">
+                    <div class="form-group">
+                        <label>Art *</label>
+                        <select id="species" required>
+                            <option value="">Art auswählen</option>
+                            <option value="Leopardgecko">Leopardgecko</option>
+                            <option value="Bartagame">Bartagame</option>
+                            <option value="Königspython">Königspython</option>
+                            <option value="Kornnatter">Kornnatter</option>
+                            <option value="Boa constrictor">Boa constrictor</option>
+                            <option value="Grüner Leguan">Grüner Leguan</option>
+                            <option value="Sonstige">Sonstige</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" placeholder="Individueller Name">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Geschlecht</label>
+                        <select id="gender">
+                            <option value="">Unbekannt</option>
+                            <option value="männlich">♂ Männlich</option>
+                            <option value="weiblich">♀ Weiblich</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Alter</label>
+                        <input type="text" id="age" placeholder="z.B. 2 Jahre, Adult">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Genetik/Morph</label>
+                        <input type="text" id="genetics" placeholder="z.B. Albino, Hypo">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Kürzel</label>
+                        <input type="text" id="code" placeholder="z.B. LP001">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Herkunft</label>
+                        <input type="text" id="origin" placeholder="Züchter, Shop">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Preis (€)</label>
+                        <input type="number" id="price" placeholder="0" min="0">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Notizen</label>
+                        <textarea id="notes" placeholder="Zusätzliche Informationen..." 
+rows="3"></textarea>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="button" class="btn btn-secondary" 
+onclick="closeModal()">Abbrechen</button>
+                        <button type="submit" class="btn btn-primary">Speichern</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Daten-Storage
+        let reptiles = JSON.parse(localStorage.getItem('reptiles') || '[]');
+        let editingId = null;
+
+        // DOM Elemente
+        const searchInput = document.getElementById('search');
+        const reptilesContainer = document.getElementById('reptilesContainer');
+        const emptyState = document.getElementById('emptyState');
+        const modal = document.getElementById('modal');
+        const form = document.getElementById('reptileForm');
+        const addBtn = document.getElementById('addBtn');
+
+        // Event Listeners
+        addBtn.addEventListener('click', showAddForm);
+        searchInput.addEventListener('input', filterReptiles);
+        form.addEventListener('submit', handleSubmit);
+
+        // Funktionen
+        function showAddForm() {
+            editingId = null;
+            document.getElementById('modalTitle').textContent = 'Neues Reptil hinzufügen';
+            form.reset();
+            modal.classList.remove('hidden');
+        }
+
+        function showEditForm(id) {
+            editingId = id;
+            const reptile = reptiles.find(r => r.id === id);
+            
+            document.getElementById('modalTitle').textContent = 'Reptil bearbeiten';
+            document.getElementById('species').value = reptile.species || '';
+            document.getElementById('name').value = reptile.name || '';
+            document.getElementById('gender').value = reptile.gender || '';
+            document.getElementById('age').value = reptile.age || '';
+            document.getElementById('genetics').value = reptile.genetics || '';
+            document.getElementById('code').value = reptile.code || '';
+            document.getElementById('origin').value = reptile.origin || '';
+            document.getElementById('price').value = reptile.price || '';
+            document.getElementById('notes').value = reptile.notes || '';
+            
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            modal.classList.add('hidden');
+            editingId = null;
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            
+            const formData = {
+                species: document.getElementById('species').value,
+                name: document.getElementById('name').value,
+                gender: document.getElementById('gender').value,
+                age: document.getElementById('age').value,
+                genetics: document.getElementById('genetics').value,
+                code: document.getElementById('code').value,
+                origin: document.getElementById('origin').value,
+                price: document.getElementById('price').value ? 
+Number(document.getElementById('price').value) : null,
+                notes: document.getElementById('notes').value
+            };
+
+            if (editingId) {
+                // Bearbeiten
+                const index = reptiles.findIndex(r => r.id === editingId);
+                reptiles[index] = { 
+                    ...reptiles[index], 
+                    ...formData, 
+                    updatedAt: new Date().toISOString() 
+                };
+            } else {
+                // Hinzufügen
+                const newReptile = {
+                    id: Date.now().toString(),
+                    ...formData,
+                    createdAt: new Date().toISOString(),
+                    updatedAt: new Date().toISOString()
+                };
+                reptiles.push(newReptile);
+            }
+
+            saveReptiles();
+            closeModal();
+            renderReptiles();
+            updateStats();
+        }
+
+        function deleteReptile(id) {
+            if (confirm('Sind Sie sicher, dass Sie dieses Reptil löschen möchten?')) {
+                reptiles = reptiles.filter(r => r.id !== id);
+                saveReptiles();
+                renderReptiles();
+                updateStats();
+            }
+        }
+
+        function saveReptiles() {
+            localStorage.setItem('reptiles', JSON.stringify(reptiles));
+        }
+
+        function filterReptiles() {
+            renderReptiles();
+        }
+
+        function renderReptiles() {
+            const searchTerm = searchInput.value.toLowerCase();
+            const filtered = reptiles.filter(reptile => {
+                if (!searchTerm) return true;
+                return (
+                    (reptile.species && reptile.species.toLowerCase().includes(searchTerm)) 
+||
+                    (reptile.name && reptile.name.toLowerCase().includes(searchTerm)) ||
+                    (reptile.genetics && 
+reptile.genetics.toLowerCase().includes(searchTerm)) ||
+                    (reptile.code && reptile.code.toLowerCase().includes(searchTerm))
+                );
+            });
+
+            if (filtered.length === 0) {
+                reptilesContainer.innerHTML = '';
+                emptyState.classList.remove('hidden');
+                return;
+            }
+
+            emptyState.classList.add('hidden');
+            reptilesContainer.innerHTML = filtered.map(reptile => `
+                <div class="reptile-card">
+                    <div class="reptile-header">
+                        <div>
+                            <h3 class="reptile-name">${reptile.name || 
+reptile.species}</h3>
+                            <p class="reptile-species">${reptile.species}</p>
+                        </div>
+                        <div class="reptile-actions">
+                            <button class="action-btn" 
+onclick="showEditForm('${reptile.id}')" title="Bearbeiten">✏️</button>
+                            <button class="action-btn" 
+onclick="deleteReptile('${reptile.id}')" title="Löschen">🗑️</button>
+                        </div>
+                    </div>
+
+                    <div class="reptile-info">
+                        ${reptile.gender ? `
+                            <div class="info-item">
+                                <span class="info-label">Geschlecht</span>
+                                <span class="info-value">
+                                    ${reptile.gender === 'männlich' ? '♂ Männlich' : 
+                                      reptile.gender === 'weiblich' ? '♀ Weiblich' : '? 
+Unbekannt'}
+                                </span>
+                            </div>
+                        ` : ''}
+                        ${reptile.age ? `
+                            <div class="info-item">
+                                <span class="info-label">Alter</span>
+                                <span class="info-value">${reptile.age}</span>
+                            </div>
+                        ` : ''}
+                        ${reptile.code ? `
+                            <div class="info-item">
+                                <span class="info-label">Kürzel</span>
+                                <span class="info-value">${reptile.code}</span>
+                            </div>
+                        ` : ''}
+                        ${reptile.origin ? `
+                            <div class="info-item">
+                                <span class="info-label">Herkunft</span>
+                                <span class="info-value">${reptile.origin}</span>
+                            </div>
+                        ` : ''}
+                    </div>
+
+                    ${reptile.genetics ? `<span class="genetics-tag">🧬 
+${reptile.genetics}</span>` : ''}
+                    ${reptile.price ? `<span class="price-tag">💰 ${reptile.price}€</span>` 
+: ''}
+                </div>
+            `).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalCount').textContent = reptiles.length;
+            document.getElementById('maleCount').textContent = reptiles.filter(r => 
+r.gender === 'männlich').length;
+            document.getElementById('femaleCount').textContent = reptiles.filter(r => 
+r.gender === 'weiblich').length;
+        }
+
+        // Initial render
+        renderReptiles();
+        updateStats();
+
+        // Modal schließen bei Klick außerhalb
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+    </script>
+</body>
+</html>

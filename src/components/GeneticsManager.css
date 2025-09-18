@@ -1,0 +1,342 @@
+
+.genetics-manager {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.genetics-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.genetics-header h2 {
+  margin: 0 0 8px 0;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.genetics-header p {
+  margin: 0;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.genetics-content {
+  display: grid;
+  grid-template-columns: 350px 1fr;
+  gap: 24px;
+  flex: 1;
+  overflow: hidden;
+}
+
+.category-selector {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-selector h3 {
+  margin: 0 0 16px 0;
+  color: #374151;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.search-box {
+  margin-bottom: 16px;
+}
+
+.search-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  box-sizing: border-box;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.category-list {
+  flex: 1;
+  overflow-y: auto;
+  gap: 8px;
+  display: flex;
+  flex-direction: column;
+}
+
+.category-option {
+  padding: 16px;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: white;
+}
+
+.category-option:hover {
+  border-color: #667eea;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.category-option.selected {
+  border-color: #667eea;
+  background: #f0f4ff;
+  box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.2);
+}
+
+.category-name {
+  font-weight: 600;
+  color: #374151;
+  margin-bottom: 4px;
+}
+
+.scientific-name {
+  font-style: italic;
+  color: #6b7280;
+  font-size: 0.85rem;
+  margin-bottom: 6px;
+}
+
+.category-path {
+  color: #9ca3af;
+  font-size: 0.8rem;
+  margin-bottom: 6px;
+}
+
+.genetics-count {
+  color: #667eea;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.genetics-editor {
+  background: white;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.editor-header {
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.editor-header h3 {
+  margin: 0 0 4px 0;
+  color: #374151;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.scientific {
+  margin: 0;
+  font-style: italic;
+  color: #6b7280;
+  font-size: 1rem;
+}
+
+.common-genetics {
+  margin-bottom: 24px;
+}
+
+.common-genetics h4 {
+  margin: 0 0 12px 0;
+  color: #374151;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.common-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.common-btn {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.common-btn:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.genetics-input-section {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 20px;
+}
+
+.genetics-input-section label {
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #374151;
+  font-size: 0.9rem;
+}
+
+.genetics-textarea {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  font-family: monospace;
+  resize: none;
+  min-height: 300px;
+}
+
+.genetics-textarea:focus {
+  outline: none;
+  border-color: #667eea;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.textarea-info {
+  margin-top: 8px;
+  font-size: 0.8rem;
+  color: #6b7280;
+}
+
+.editor-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-end;
+}
+
+.save-btn {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.save-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.clear-btn {
+  background: #f3f4f6;
+  border: 1px solid #d1d5db;
+  color: #374151;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-btn:hover {
+  background: #e5e7eb;
+  border-color: #9ca3af;
+}
+
+.no-selection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+  text-align: center;
+  color: #6b7280;
+}
+
+.no-selection-icon {
+  font-size: 4rem;
+  margin-bottom: 20px;
+  opacity: 0.5;
+}
+
+.no-selection h3 {
+  margin: 0 0 12px 0;
+  color: #374151;
+  font-size: 1.25rem;
+}
+
+.no-selection p {
+  margin: 0;
+  max-width: 300px;
+  line-height: 1.5;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .genetics-content {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  .category-selector {
+    order: 2;
+    max-height: 300px;
+  }
+
+  .genetics-editor {
+    order: 1;
+  }
+
+  .common-buttons {
+    flex-direction: column;
+  }
+
+  .common-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .editor-actions {
+    flex-direction: column;
+  }
+
+  .save-btn,
+  .clear-btn {
+    width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .genetics-manager {
+    padding: 16px;
+  }
+
+  .genetics-content {
+    gap: 12px;
+  }
+
+  .category-selector,
+  .genetics-editor {
+    padding: 16px;
+  }
+
+  .genetics-textarea {
+    min-height: 200px;
+  }
+}
